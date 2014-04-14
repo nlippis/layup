@@ -109,8 +109,10 @@ def player(request, player_url):
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 """
 
+
+
 @login_required
-def player_edit(request, player_url):
+def edit_player(request, player_url):
     """
     Player edit profile view
     """
@@ -154,7 +156,7 @@ def player_edit(request, player_url):
             'player': player,
         }
 
-    return render(request, 'layup/player_edit.html', context)
+    return render(request, 'layup/edit_player.html', context)
 
 """
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -211,7 +213,7 @@ def register(request):
 
     return render(request, 'layup/register.html', context)
 
-def player_login(request):
+def login_player(request):
     """
     Player Login page view
     """
@@ -235,7 +237,7 @@ def player_login(request):
         return render(request, 'layup/login.html', {})
 
 @login_required
-def player_logout(request):
+def logout_player(request):
     """
     Player logout redirect
     """
