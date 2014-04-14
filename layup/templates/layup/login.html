@@ -1,0 +1,15 @@
+{% extends 'layup/base.html' %}
+
+{% block title %} - Login{% endblock %}
+
+{% block body %}
+    <h1>Login to Layup</h1>
+    <form id="login_form" method="post" action={% url 'layup:login' %}>
+        {% csrf_token %}
+        Username: <input type="text" name="username" value="" size="20" />
+        <br>
+        Password: <input type="password" name="password" value="" size="20" />
+        <br>
+        <input type="submit" value="submit" />
+    </form>
+{% endblock %}

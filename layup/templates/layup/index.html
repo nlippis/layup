@@ -1,0 +1,17 @@
+{% extends 'layup/base.html' %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+    <h1>Welcome to Layup</h1>
+    {% if user.is_authenticated %}
+    <h2>{{ user.username }}</h2>
+    {% endif %}
+    {% if leagues %}
+    <ul>
+        {% for league in leagues %}
+        <li><a href="{% url 'layup:league' league.url %}">{{ league.name }}</a></li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+{% endblock %}

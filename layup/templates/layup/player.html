@@ -1,0 +1,15 @@
+{% extends 'layup/base.html' %}
+
+{% block title %} - {{ player.user.username }}{% endblock %}
+
+{% block body %}
+    <h1>{{ player.user.username }}</h1>
+    <ul>
+        <li>Age : {{ player.age }}</li>
+        <li>Email : {{ player.user.email }}</li>
+        <li>League : {{ player.league }}</li>
+        <li>Team : {{ player.team }}</li>
+        <li>Position : {{ player.position }}</li>
+        <li>About : {{ player.about }}</li>
+    </ul>
+{% endblock %}
