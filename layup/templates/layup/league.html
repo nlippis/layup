@@ -1,13 +1,13 @@
 {% extends 'layup/base.html' %}
 
-{% block title %} - {{ league }}{% endblock %}
+{% block title %} - {{ league.name }}{% endblock %}
 
 {% block body %}
-    <h1>{{ league }}</h1>
+    <h1>{{ league.name }}</h1>
     {% if teams %}
     <ul>
         {% for team in teams %}
-        <li><a href="{% url 'layup:team' team.url %}">{{ team.name }}</a></li>
+        <li><a href="{% url 'layup:team' league.url team.url %}">{{ team.name }}</a></li>
         {% endfor %}
     </ul>
     {% endif %}

@@ -51,32 +51,39 @@ def league(request, league_url):
     league_name = decode_url(league_url)
     league = get_object_or_404(League, name=league_name)
 
+    # Set url value for team redirect
+    league.url = league_url
+    
     teams = league.team_set.all()
 
     for team in teams:
         team.url = encode_url(team.name)
 
     context = {
-            'league': league.name,
+            'league': league,
             'teams': teams,
         }
 
     return render(request, 'layup/league.html', context)
 
-def team(request, team_url):
+def team(request, league_url, team_url):
     """
     Team page view, displaying all players in specified
     team
     """
 
-    # Check for valid team 
+    # Check for valid league / team 
+    league_name = decode_url(league_url)
+    league = get_object_or_404(League, name=league_name)
+
     team_name = decode_url(team_url)
-    team = get_object_or_404(Team, name=team_name)
+    team = get_object_or_404(league.team_set, name=team_name)
 
     players = team.player_set.all()
 
     context = {
-            'team': team.name,
+            'league': league,
+            'team': team,
             'players': players,
         }
 
