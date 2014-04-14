@@ -1,11 +1,12 @@
 from django.contrib.auth.models import User
 from layup.models import League, Team, Player
-from layup.forms import UserForm, PlayerForm
 from django.template import RequestContext, loader
 from django.shortcuts import render, get_object_or_404 
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth import authenticate, login, logout
+from layup.forms import UserForm, PlayerForm, EditUserForm
+from layup.forms import LeagueForm, EditLeagueForm 
 
 """
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -74,9 +75,6 @@ def team(request, team_url):
 
     players = team.player_set.all()
 
-    for player in players:
-        player.url = encode_url(player.user.username)
-
     context = {
             'team': team.name,
             'players': players,
@@ -91,15 +89,65 @@ def player(request, player_url):
     """
 
     # Check for valid player
-    player_name = decode_url(player_url)
-    user = get_object_or_404(User, username=player_name)
+    user = get_object_or_404(User, username=player_url)
     player = get_object_or_404(Player, user=user)
-
-    # Filter values, so only relevant data shown
 
     context = {'player': player}
 
     return render(request, 'layup/player.html', context)
+
+"""
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+                   Data Edit Views 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+"""
+
+@login_required
+def player_edit(request, player_url):
+    """
+    Player edit profile view
+    """
+    
+    #Check for valid player
+    user = get_object_or_404(User, username=player_url)
+    player = get_object_or_404(Player, user=user)
+
+    # If form submitted
+    if request.method =='POST':
+        user_form = EditUserForm(request.POST, instance=user)
+        player_form = PlayerForm(request.POST, instance=player)
+
+        if user_form.is_valid() and player_form.is_valid():
+            # Process user update
+            user = user_form.save()
+            user.set_password(user.password)
+            user.save()
+
+            # Process player form data
+            player = player_form.save()
+            player.save()
+
+            return HttpResponseRedirect(
+                    '/layup/player/%s/' % player_url
+                )
+
+        # If mistakes in form
+        else:
+            print user_form.errors, player_form.errors
+
+    # Accessing register page for first time
+    else:
+        user_form = EditUserForm(instance=user)
+        player_form = PlayerForm(instance=player)
+
+    # Create context dict for page rendering
+    context = {
+            'user_form': user_form,
+            'player_form': player_form,
+            'player': player,
+        }
+
+    return render(request, 'layup/player_edit.html', context)
 
 """
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

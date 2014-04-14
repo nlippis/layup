@@ -28,6 +28,7 @@ TEMPLATE_DIRS = [os.path.join(BASE_DIR, 'templates')]
 
 ALLOWED_HOSTS = []
 
+LOGIN_URL = '/layup/login/'
 
 # Application definition
 

@@ -5,6 +5,8 @@
 {% block body %}
     <h1>{{ player.user.username }}</h1>
     <ul>
+        <li>First Name : {{ player.user.first_name }}</li>
+        <li>Last Name : {{ player.user.last_name }}</li>
         <li>Age : {{ player.age }}</li>
         <li>Email : {{ player.user.email }}</li>
         <li>League : {{ player.league }}</li>
@@ -12,4 +14,9 @@
         <li>Position : {{ player.position }}</li>
         <li>About : {{ player.about }}</li>
     </ul>
+
+    <hr>
+    {% if user.username == player.user.username %}
+    <a href="{% url 'layup:player_edit' player.user.username %}">Edit {{ player.user.username }}</a>
+    {% endif %}
 {% endblock %}

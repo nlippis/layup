@@ -25,6 +25,23 @@ class UserForm(forms.ModelForm):
                 'email', 
                 'password',
             )
+        
+class EditUserForm(forms.ModelForm):
+    """
+    Class that represents the user for authentication
+    purposes, it is one part of the Player entitiy
+    """
+
+    password = forms.CharField(widget=forms.PasswordInput())
+
+    class Meta:
+        model = User
+        fields = (
+                'first_name', 
+                'last_name', 
+                'email', 
+                'password',
+            )
 
 class PlayerForm(forms.ModelForm):
     """
