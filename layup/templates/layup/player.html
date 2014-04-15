@@ -2,8 +2,11 @@
 
 {% block title %} - {{ player.user.username }}{% endblock %}
 
+{% block body_title %}
+<h1>{{ player.user.username }}</h1>
+{% endblock %}
+
 {% block body %}
-    <h1>{{ player.user.username }}</h1>
     <ul>
         <li>First Name : {{ player.user.first_name }}</li>
         <li>Last Name : {{ player.user.last_name }}</li>
@@ -15,11 +18,3 @@
         <li>About : {{ player.about }}</li>
     </ul>
 {% endblock %}
-
-{% block foot %}
-{% if user.username == player.user.username %}
-<a href="{% url 'layup:edit_player' player.user.username %}">Edit {{ player.user.username }}</a>
-<br>
-{% endif %}
-{% endblock %}
-

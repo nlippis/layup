@@ -2,13 +2,18 @@
 
 {% block title %} - {{ league.name }}{% endblock %}
 
+{% block body_title %}
+<h1>{{ league.name }}</h1>
+{% endblock %}
+
 {% block body %}
-    <h1>{{ league.name }}</h1>
     {% if teams %}
     <ul>
         {% for team in teams %}
         <li><a href="{% url 'layup:team' league.url team.url %}">{{ team.name }}</a></li>
         {% endfor %}
     </ul>
+    {% else %}
+    <strong>This League does not have any teams</strong>
     {% endif %}
 {% endblock %}

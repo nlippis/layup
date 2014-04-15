@@ -15,6 +15,7 @@ class UserForm(forms.ModelForm):
     purposes, it is one part of the Player entitiy
     """
 
+    email = forms.EmailField(required=True)
     password = forms.CharField(widget=forms.PasswordInput())
 
     class Meta:
@@ -29,11 +30,14 @@ class UserForm(forms.ModelForm):
 
     def clean(self):
         cleaned_data = self.cleaned_data
-        password = cleaned_data.get('password')
+        if cleaned_data.has_key('password'):
+            password = cleaned_data.get('password')
 
-        if len(password) > 6:
-            raise ValidationError('Password too long, must ' +
-                'be less than 6 characters')
+            if len(password) > 6:
+                raise ValidationError('Password too long, must ' +
+                    'be less than 6 characters')
+        else:
+            raise ValidationError('This field is required.')
 
         return cleaned_data
         
@@ -46,7 +50,7 @@ class EditUserForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput())
 
     class Meta:
-
+        model = User
         fields = (
                 'first_name', 
                 'last_name', 
@@ -58,9 +62,11 @@ class PlayerForm(forms.ModelForm):
     Form represnets the player part of the user
     information
     """
+
     def __init__(self, *args, **kwargs):
         super(PlayerForm, self).__init__(*args, **kwargs)
         self.fields['league'].queryset = League.objects.filter(status=True)
+        self.fields['league'].required = True
 
     class Meta:
         model = Player

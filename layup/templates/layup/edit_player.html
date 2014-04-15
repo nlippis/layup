@@ -1,13 +1,24 @@
-{% extends 'layup/base.html' %}
+{% extends 'layup/form_base.html' %}
+{% load add_css %}
 
 {% block title %} - Edit {{ player.user.username }}{% endblock %}
 
 {% block body %}
-    <h1>Edit {{ player.user.username }}</h1>
-    <form id="edit_player_form" method="post" action={% url 'layup:edit_player' player.user.username %}>
+    <form class="form-signin" fole="form" id="edit_player_form" method="post" action={% url 'layup:edit_player' player.user.username %}>
+        <h2 class="form-signin-heading">Edit {{ player.user.username }}</h2>
         {% csrf_token %}
-        {{ user_form.as_p }}
-        {{ player_form.as_p }}
-        <input type="submit" name="submit" value="Edit" />
+        {% for field in user_form %}
+        {{ field.label_tag }}
+        {{ field.errors }}
+        {{ field|addcss:"form-control" }}
+        <br>
+        {% endfor %}
+        {% for field in player_form %}
+        {{ field.label_tag }}
+        {{ field.errors }}
+        {{ field|addcss:"form-control" }}
+        <br>
+        {% endfor %}
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Save</button>
     </form>
 {% endblock %}

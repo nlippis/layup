@@ -2,13 +2,18 @@
 
 {% block title %} - {{ team }}{% endblock %}
 
+{% block body_title %}
+<h1>{{ team.name }}</h1>
+{% endblock %}
+
 {% block body %}
-    <h1>{{ team.name }}</h1>
     {% if players %}
     <ul>
         {% for player in players %}
         <li><a href="{% url 'layup:player' player.user.username %}">{{ player.user.username }}</a></li>
         {% endfor %}
     </ul>
+    {% else %}
+    <strong>No players have been drafted into this league</strong>
     {% endif %}
 {% endblock %}

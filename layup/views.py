@@ -8,15 +8,14 @@ from layup.team_namer import team_name_generator
 from django.template import RequestContext, loader
 from django.shortcuts import render, get_object_or_404 
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect, HttpResponse, Http404
 from django.contrib.auth import authenticate, login, logout
 from layup.forms import UserForm, PlayerForm, EditUserForm
 from django.contrib.auth.decorators import user_passes_test
 
-
 """
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-              Url Decoding Functions 
+                Url Decoding Functions 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 """
 
@@ -339,7 +338,9 @@ def edit_player(request, player_url):
     """
     Player edit profile view
     """
-    
+    if request.user.username != player_url:
+        raise Http404
+
     #Check for valid player
     user = get_object_or_404(User, username=player_url)
     player = get_object_or_404(Player, user=user)

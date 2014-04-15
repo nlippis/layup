@@ -2,11 +2,15 @@
 
 {% block title %}{% endblock %}
 
-{% block body %}
-    <h1>Welcome to Layup</h1>
+{% block body_title %}
     {% if user.is_authenticated %}
-    <h2>{{ user.username }}</h2>
+    <h1>Welcome {{ user.username }} here are the Leagues!</h1>
+    {% else %}
+    <h1>Welcome to Layup here are the Leagues!</h1>
     {% endif %}
+{% endblock %}
+
+{% block body %}
     {% if leagues %}
     <ul>
         {% for league in leagues %}

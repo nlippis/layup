@@ -1,17 +1,28 @@
-{% extends 'layup/base.html' %}
+{% extends 'layup/form_base.html' %}
+{% load add_css %}
 
 {% block title %} - Register{% endblock %}
 
 {% block body %}
-    <h1>Register</h1>
     {% if registered %}
     <strong>Thank you for registering</strong>
     {% else %}
-    <form id="player_form" method="post" action={% url 'layup:register' %}>
+    <form class="form-signin" role="form" id="player_form" method="post" action={% url 'layup:register' %}>
+        <h2 class="form-signin-heading">Register for Layup</h2>
         {% csrf_token %}
-        {{ user_form.as_p }}
-        {{ player_form.as_p }}
-        <input type="submit" name="submit" value="Register" />
+        {% for field in user_form %}
+        {{ field.label_tag }}
+        {{ field.errors }}
+        {{ field|addcss:"form-control" }}
+        <br>
+        {% endfor %}
+        {% for field in player_form %}
+        {{ field.label_tag }}
+        {{ field.errors }}
+        {{ field|addcss:"form-control" }}
+        <br>
+        {% endfor %}
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
     </form>
     {% endif %}
 {% endblock %}
