@@ -91,3 +91,18 @@ class LeagueForm(forms.ModelForm):
     class Meta:
         model = League
         fields = ('name','status')
+
+    def clean(self):
+        cleaned_data = self.cleaned_data
+        
+        if cleaned_data.has_key('name'):
+            name = cleaned_data.get('name')
+
+            if '_' in name:
+                raise ValidationError('Underscores are not allowed')
+            if name is not name.strip():
+                raise ValidationError('Leading and trailing spaces not allowed')
+        else:
+            raise ValidationError('League Name is required')
+            
+        return cleaned_data
