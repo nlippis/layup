@@ -1,0 +1,22 @@
+{% extends 'layup/base.html' %}
+
+{% block title %} - Edit {{ league.name }}{% endblock %}
+
+{% block body %}
+    <h1>Edit {{ league.name }}</h1>
+    <form id="edit_league_form" method="post" action={% url 'layup:edit_league' league.url  %}>
+        {% csrf_token %}
+        {{ league_form.as_p }}
+        <input type="submit" name="submit" value="Save" />
+    </form>
+    <br>
+    <form id="delete_league_form" method="post" action={% url 'layup:edit_league' league.url %}>
+        {% csrf_token %}
+        <input type="submit" name="autodraft" value="Autodraft" />
+    </form>
+    <br>
+    <form id="delete_league_form" method="post" action={% url 'layup:edit_league' league.url %}>
+        {% csrf_token %}
+        <input type="submit" name="delete" value="Delete {{ league.name }}" />
+    </form>
+{% endblock %}

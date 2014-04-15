@@ -7,5 +7,22 @@
 
     <body>
     {% block body %}{% endblock %}
+
+    <hr>
+
+    <a href="{% url 'layup:index' %}">Home</a>
+    <br>
+    {% if user.is_authenticated %}
+    {% block foot %}{% endblock%}
+        {% if user.is_superuser %}
+        <a href="{% url 'layup:manage' %}">Manage Leagues</a>
+        <br>
+        {% endif %}
+    <a href="{% url 'layup:logout' %}">Logout</a>
+    {% else %}
+    <a href="{% url 'layup:register' %}">Register</a>
+    <br>
+    <a href="{% url 'layup:login' %}">Login</a>
+    {% endif %}
     </body>
 </html>

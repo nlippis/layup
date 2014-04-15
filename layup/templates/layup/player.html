@@ -14,9 +14,12 @@
         <li>Position : {{ player.position }}</li>
         <li>About : {{ player.about }}</li>
     </ul>
-
-    <hr>
-    {% if user.username == player.user.username %}
-    <a href="{% url 'layup:player_edit' player.user.username %}">Edit {{ player.user.username }}</a>
-    {% endif %}
 {% endblock %}
+
+{% block foot %}
+{% if user.username == player.user.username %}
+<a href="{% url 'layup:edit_player' player.user.username %}">Edit {{ player.user.username }}</a>
+<br>
+{% endif %}
+{% endblock %}
+

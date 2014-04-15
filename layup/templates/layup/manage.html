@@ -1,0 +1,21 @@
+{% extends 'layup/base.html' %}
+
+{% block title %}- Manage{% endblock %}
+
+{% block body %}
+    <h1>Layup Manager</h1>
+    {% if leagues %}
+    <ul>
+        {% for league in leagues %}
+        <li><a href="{% url 'layup:edit_league' league.url %}">{{ league.name }}</a></li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <strong>There are no leagues at the moment, create some!</strong>
+    {% endif %}
+{% endblock %}
+
+{% block foot %}
+<a href="{% url 'layup:create_league' %}">Create League</a>
+<br>
+{% endblock %}

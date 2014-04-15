@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from layup.models import League, Team, Player
+from django.core.exceptions import ValidationError
 
 """
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -25,6 +26,16 @@ class UserForm(forms.ModelForm):
                 'email', 
                 'password',
             )
+
+    def clean(self):
+        cleaned_data = self.cleaned_data
+        password = cleaned_data.get('password')
+
+        if len(password) > 6:
+            raise ValidationError('Password too long, must ' +
+                'be less than 6 characters')
+
+        return cleaned_data
         
 class EditUserForm(forms.ModelForm):
     """
@@ -35,12 +46,11 @@ class EditUserForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput())
 
     class Meta:
-        model = User
+
         fields = (
                 'first_name', 
                 'last_name', 
                 'email', 
-                'password',
             )
 
 class PlayerForm(forms.ModelForm):
@@ -48,6 +58,9 @@ class PlayerForm(forms.ModelForm):
     Form represnets the player part of the user
     information
     """
+    def __init__(self, *args, **kwargs):
+        super(PlayerForm, self).__init__(*args, **kwargs)
+        self.fields['league'].queryset = League.objects.filter(status=True)
 
     class Meta:
         model = Player
@@ -71,13 +84,4 @@ class LeagueForm(forms.ModelForm):
 
     class Meta:
         model = League
-        fields = ('name',)
-
-class EditLeagueForm(forms.ModelForm):
-    """
-    Form used for editing the League entity
-    """
-
-    class Meta:
-        model = League
-        fields = ('status',)
+        fields = ('name','status')

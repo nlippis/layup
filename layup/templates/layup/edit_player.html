@@ -4,7 +4,7 @@
 
 {% block body %}
     <h1>Edit {{ player.user.username }}</h1>
-    <form id="edit_player_form" method="post" action={% url 'layup:player_edit' player.user.username %}>
+    <form id="edit_player_form" method="post" action={% url 'layup:edit_player' player.user.username %}>
         {% csrf_token %}
         {{ user_form.as_p }}
         {{ player_form.as_p }}

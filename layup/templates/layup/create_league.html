@@ -1,0 +1,14 @@
+{% extends 'layup/base.html' %}
+
+{% block title %} - Create League{% endblock %}
+
+{% block body %}
+    <h1>Create League</h1>
+    <form id="league_form" method="post" action={% url 'layup:create_league' %}>
+        {% csrf_token %}
+        {{ league_form.as_p }}
+        Teams: <input type="number" name="teams" value="" size="5" />
+        <br>
+        <input type="submit" name="submit" value="Create" />
+    </form>
+{% endblock %}
