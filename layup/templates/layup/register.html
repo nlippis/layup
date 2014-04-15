@@ -5,7 +5,8 @@
 
 {% block body %}
     {% if registered %}
-    <strong>Thank you for registering</strong>
+    <strong>Thank you for registering <a href="{% url 'layup:login' %}">login here</a></strong>
+    <strong>return to the <a href="{% url 'layup:index' %}">homepage here</a></strong>
     {% else %}
     <form class="form-signin" role="form" id="player_form" method="post" action={% url 'layup:register' %}>
         <h2 class="form-signin-heading">Register for Layup</h2>
