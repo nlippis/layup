@@ -23,7 +23,7 @@ Django application that makes it easier for someone to run their basketball leag
 
 ###Managing Layup
 
-* The only superuser is hardcoded in unfortunatly, so to manage Layup you must log in with the superuser credentials of username: layup password: layup.
+* The only superuser is hardcoded in unfortunatly, so to manage Layup you must log in with the superuser credentials of username: commissioner password: commissioner
 * Creating a League : Once logged in as superuser, click on Hi, layup and select Create League.  Fill out the form with the league name, and number of teams then click create.  The team names are automatically generated (some may be a bit weird).
 * Editing a League : Once logged in as superuser, click on Hi, layup and select Manage Leagues.  From here choose a league.  You can change the league name and/or make the league inactive then click save.
 * Autodrafting a league : Once logged in as superuser, click on Hi, layup and select Manage Leagues.  From here choose a league. Click on autodraft, which automatically drafts players who have signed up for the league into the leagues teams
